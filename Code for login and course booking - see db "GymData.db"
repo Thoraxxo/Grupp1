@@ -1,5 +1,7 @@
 //**THE DATABASE FOR THIS IS GymData.db, WHICH YOU CAN FIND IN group1TIG059!**//
 
+//For this code, I used Windows Application Builder in Eclipse for the GUI but obviously wrote the code for the interface myself. I took help from many many tutorials on the internet and youtube. 
+
 //The first part here is the connection to SQL
 
 import java.sql.*;
