@@ -1,0 +1,81 @@
+CREATE TABLE courseOccasion (
+	courseID integer REFERENCES course (courseID),
+	roomID integer REFERENCES room (roomID),
+	equipmentType text,
+	startTime integer,
+	endTime integer,
+	instructorID integer REFERENCES instructor (instructorID),
+	PRIMARY KEY (courseID, roomID, instructorID)	
+);
+
+CREATE TABLE equipment (
+	equipmentType text,
+	sizeType text
+	equipmentID integer PRIMARY KEY
+);
+
+CREATE TABLE room (
+	roomID integer PRIMARY KEY
+);
+
+CREATE TABLE member (
+	memberID integer PRIMARY KEY,
+ 	pNr integer,
+	phone integer,
+	email text,
+	lName text,
+	fName text,
+	password text
+);
+
+CREATE TABLE instructor (
+	instructorID integer PRIMARY KEY,
+	phone integer,
+	email text,
+	name text
+);
+
+CREATE TABLE course (
+	courseID integer PRIMARY KEY,
+	courseName text,
+	courseType text
+);
+
+
+CREATE TABLE courseEnrollment (
+	courseID integer REFERENCES course (courseID),
+	memberID integer REFERENCES member (memberID),
+	instructorID integer REFERENCES instructor (instructorID),
+	PRIMARY KEY (courseID, memberID, instructorID)
+);
+
+CREATE TABLE typeOfMembership (
+	tierName text,
+	instructorAccess text,
+	gymAccess text,
+	courseAccess text,
+	price integer,
+	duration integer,
+	memberID integer REFERENCES member (memberID),
+	PRIMARY KEY (memberID)
+);
+
+
+
+CREATE TABLE schedule (
+	date integer,
+	courseID integer REFERENCES course (courseID),
+	roomID integer REFERENCES room (roomID),
+	PRIMARY KEY (courseID, roomID)
+);
+
+
+
+CREATE TABLE payment (
+    memberID integer REFERENCES member (memberID),
+    totalPrice integer,
+    dateOfPayment integer,
+    noOfBills integer,
+    PRIMARY KEY (memberID)
+);
+
