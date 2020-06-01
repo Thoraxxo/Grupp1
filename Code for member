@@ -1,0 +1,147 @@
+package fitness2;
+import java.sql.*;
+import javax.swing.*;
+import org.sqlite.SQLiteConfig;
+
+public class member {
+   
+   
+   
+   public static Connection conn = null;
+   public static final String DB_URL = "jdbc:sqlite:/C:/sqlite3/test.db ";  
+   public static final String DRIVER = "org.sqlite.JDBC";  
+   
+   public static void main(String[] args){
+         
+         String KEY_ON = "PRAGMA foreign_keys = on";
+      try {
+         Class.forName(DRIVER);
+         SQLiteConfig config = new SQLiteConfig();  
+         config.enforceForeignKeys(true);
+         conn = DriverManager.getConnection(DB_URL,config.toProperties());
+         }catch (Exception e) {
+         System.out.println( e.toString() );
+         System.exit(0);
+  
+      }
+      menu();
+      
+   }
+   public static void menu(){
+      while (true){
+         String[] options = {"Quit","Log in","Gyms","Book course","Sign up"};
+         int x = JOptionPane.showOptionDialog(null, "Welcome","Meny",
+                                              JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, null);
+         
+         if (x == JOptionPane.CLOSED_OPTION){
+               System.exit(0);
+         }
+      
+         switch(x){
+            case 4:
+            //Sign up
+            JOptionPane.showMessageDialog(null,(signUp()));
+            break;
+            case 3:
+            //Booking
+         
+            break;  
+            case 2:
+            //Gyms
+            
+            break;   
+            case 1:
+            //Sign in
+            
+            break;
+            case 0:
+            //Quit
+               System.exit(0);
+         break;    
+         }
+      }
+   }
+   
+   public static String signUp(){
+      String sql = "INSERT INTO member VALUES(?,?,?,?,?,?,?)";
+      String result = "";
+      
+      int memberID = 0;
+      int pNr = 0;
+      int phone = 0;
+      String email = "";
+      String lName = "";
+      String fName = "";
+      String password = "";
+      
+     
+      
+      JTextField field1 = new JTextField();
+      JTextField field2 = new JTextField();
+      JTextField field3 = new JTextField();
+      JTextField field4 = new JTextField();
+      JTextField field5 = new JTextField();
+      JTextField field6 = new JTextField();
+      JTextField field7 = new JTextField();
+      
+      
+      Object[] message = {
+         "memberID:", field1,
+         "Person number:", field2,
+         "Phone number:", field3,
+         "Email:", field4,
+         "Surname:", field5,
+         "First Name:", field6,
+         "Password:", field7,
+         
+      };
+     
+      int option = JOptionPane.showConfirmDialog(null, message, "Add your information", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+      if (option == JOptionPane.OK_OPTION){  
+         try {
+            memberID = Integer.parseInt(field1.getText());
+         }
+         catch(Exception e){
+         }
+         
+         pNr = Integer.parseInt(field2.getText());
+         phone = Integer.parseInt(field3.getText());
+         email = field4.getText();
+         lName = field5.getText();
+         fName = field6.getText();
+         password = field7.getText();
+         
+      }
+      
+     
+     
+      try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            System.out.println("New member added");
+            
+            
+            
+            pstmt.setInt(1, memberID);
+            pstmt.setInt(2, pNr);
+            pstmt.setInt(3, phone);
+            pstmt.setString(4, email);
+            pstmt.setString(5, lName);
+            pstmt.setString(6, fName);
+            pstmt.setString(7, password);
+            
+            
+            pstmt.executeUpdate();
+            
+            result = fName + " " + lName + " added.";           
+      }
+      
+      
+      catch (SQLException e){
+            
+            System.out.println(e.toString()); 
+            result = e.toString();
+      } 
+        
+      return result;
+   }       
+}
