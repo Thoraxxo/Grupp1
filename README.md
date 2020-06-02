@@ -1,4 +1,4 @@
-# Grupp1task2
+# Grupp1 FitnessAB
 we are group 1 and this is our portfolio for the Fitness AB information systems.
 
 We do not have one large file for our code but instead 3 different files that complete different tasks.
